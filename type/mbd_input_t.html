@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Many-body dispersion library">
+    
+    <meta name="author" content="" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>mbd_input_t &ndash; Libmbd </title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+    <link href="../css/user.css" rel="stylesheet">
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">Libmbd </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>mbd_input_t
+    <small>Derived Type</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title="<p>13.5% of total for derived types.</p>Including implementation: 28 statements,  4.5% of total for derived types.">28 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/mbd.F90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/mbd.f90.html'>mbd.F90</a></li>
+    
+     <li><a href='../module/mbd.html'>mbd</a></li>
+    
+  
+     <li class="active">mbd_input_t</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-method">method</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-comm">comm</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-max_atoms_per_block">max_atoms_per_block</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-log_level">log_level</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-printer">printer</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_forces">calculate_forces</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_vdw_params_gradients">calculate_vdw_params_gradients</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_spectrum">calculate_spectrum</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-do_rpa">do_rpa</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-rpa_orders">rpa_orders</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-rpa_rescale_eigs">rpa_rescale_eigs</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-n_omega_grid">n_omega_grid</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-k_grid_shift">k_grid_shift</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-zero_negative_eigvals">zero_negative_eigvals</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-xc">xc</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-ts_d">ts_d</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-ts_sr">ts_sr</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-mbd_a">mbd_a</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-mbd_beta">mbd_beta</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-vdw_params_kind">vdw_params_kind</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-atom_types">atom_types</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-free_values">free_values</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-coords">coords</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-lattice_vectors">lattice_vectors</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-k_grid">k_grid</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-parallel_mode">parallel_mode</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+      <h2>type, public :: mbd_input_t</h2>
+    <p>Contains user input to an MBD calculation.</p>
+    
+    
+    
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-method">method</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-comm">comm</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-max_atoms_per_block">max_atoms_per_block</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-log_level">log_level</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-printer">printer</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_forces">calculate_forces</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_vdw_params_gradients">calculate_vdw_params_gradients</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-calculate_spectrum">calculate_spectrum</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-do_rpa">do_rpa</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-rpa_orders">rpa_orders</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-rpa_rescale_eigs">rpa_rescale_eigs</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-n_omega_grid">n_omega_grid</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-k_grid_shift">k_grid_shift</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-zero_negative_eigvals">zero_negative_eigvals</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-xc">xc</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-ts_d">ts_d</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-ts_sr">ts_sr</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-mbd_a">mbd_a</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-mbd_beta">mbd_beta</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-vdw_params_kind">vdw_params_kind</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-atom_types">atom_types</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-free_values">free_values</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-coords">coords</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-lattice_vectors">lattice_vectors</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-k_grid">k_grid</a>
+      
+      <a class="list-group-item" href="../type/mbd_input_t.html#variable-parallel_mode">parallel_mode</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+    <section>
+    <h2>Components</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th><th>Visibility</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-method"></span>character(len=30),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>method</strong></td><td> =</td><td>'mbd-rsscs'</td><td><p>VdW method to use to calculate energy and gradients.</p>
+<ul>
+<li><code>mbd-rsscs</code>: The MBD@rsSCS method.</li>
+<li><code>mbd-nl</code>: The MBD-NL method.</li>
+<li><code>ts</code>: The TS method.</li>
+<li><code>mbd</code>: Generic MBD method (without any screening).</li>
+</ul></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-comm"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>comm</strong></td><td> =</td><td>-1</td><td><p>MPI communicator.</p>
+<p>Only used when compiled with MPI. Leave as is to use the
+ MPI_COMM_WORLD communicator.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-max_atoms_per_block"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>max_atoms_per_block</strong></td><td> =</td><td>6</td><td><p>Number of atoms per block in a BLACS grid.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-log_level"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>log_level</strong></td><td> =</td><td>MBD_LOG_LVL_INFO</td><td><p>Level of printing</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-printer"></span>procedure(printer_i),</td>
+  
+  <td>public,</td>
+  <td>nopass, pointer</td><td>::</td>
+  <td><strong>printer</strong></td><td>=> </td><td>null()</td><td><p>If assigned, will be used for logging</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-calculate_forces"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>calculate_forces</strong></td><td> =</td><td>.true.</td><td><p>Whether to calculate forces.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-calculate_vdw_params_gradients"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>calculate_vdw_params_gradients</strong></td><td> =</td><td>.false.</td><td><p>Whether to calculate gradients of energy w.r.t. vdW parameters</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-calculate_spectrum"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>calculate_spectrum</strong></td><td> =</td><td>.false.</td><td><p>Whether to keep MBD eigenvalues.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-do_rpa"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>do_rpa</strong></td><td> =</td><td>.false.</td><td><p>Whether to evalulate the MBD energy as an RPA integral over frequency.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-rpa_orders"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>rpa_orders</strong></td><td> =</td><td>.false.</td><td><p>Whether to calculate individual RPA orders</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-rpa_rescale_eigs"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>rpa_rescale_eigs</strong></td><td> =</td><td>.false.</td><td><p>Whether to rescale RPA eigenvalues as in 10.1021/acs.jctc.6b00925.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-n_omega_grid"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>n_omega_grid</strong></td><td> =</td><td>15</td><td><p>Number of imaginary frequency grid points.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-k_grid_shift"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>k_grid_shift</strong></td><td> =</td><td>0.5d0</td><td><p>Off-<script type="math/tex">\Gamma</script> shift of the <script type="math/tex">k</script>-point grid in units of
+ inter-<script type="math/tex">k</script>-point distance.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-zero_negative_eigvals"></span>logical,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>zero_negative_eigvals</strong></td><td> =</td><td>.false.</td><td><p>Whether to zero out negative eigenvalues.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-xc"></span>character(len=20),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>xc</strong></td><td> =</td><td>''</td><td><p>XC functional for automatic setting of damping parameters.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ts_d"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ts_d</strong></td><td> =</td><td>20d0</td><td><p>TS damping parameter <script type="math/tex">d</script>.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-ts_sr"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>ts_sr</strong></td><td> =</td><td>-1</td><td><p>Custom TS damping parameter <script type="math/tex">s_R</script>.</p>
+<p>Leave as is to use a value based on the XC functional.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-mbd_a"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>mbd_a</strong></td><td> =</td><td>6d0</td><td><p>MBD damping parameter <script type="math/tex">a</script>.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-mbd_beta"></span>real(kind=dp),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>mbd_beta</strong></td><td> =</td><td>-1</td><td><p>Custom MBD damping parameter <script type="math/tex">\beta</script>.</p>
+<p>Leave as is to use a value based on the XC functional.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-vdw_params_kind"></span>character(len=10),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>vdw_params_kind</strong></td><td> =</td><td>'ts'</td><td><p>Which free-atom reference vdW parameters to use for scaling.</p>
+<ul>
+<li><code>ts</code>: Values from original TS method.</li>
+<li><code>tssurf</code>: Values from the TS<script type="math/tex">^\text{surf}</script> approach.</li>
+</ul></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-atom_types"></span>character(len=3),</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>atom_types</strong>(:)</td><td></td><td></td><td><p>(<script type="math/tex">N</script>) Atom types used for picking free-atom reference values.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-free_values"></span>real(kind=dp),</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>free_values</strong>(:,:)</td><td></td><td></td><td><p>(<script type="math/tex">N\times3</script>, a.u.) Custom free-atom vdW paramters to use for
+ scaling.</p>
+<p>Columns contain static polarizabilities, C6 coefficients, and vdW
+ radii.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-coords"></span>real(kind=dp),</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>coords</strong>(:,:)</td><td></td><td></td><td><p>(<script type="math/tex">3\times N</script>, a.u.) Atomic coordinates.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-lattice_vectors"></span>real(kind=dp),</td>
+  
+  <td>public,</td>
+  <td>allocatable</td><td>::</td>
+  <td><strong>lattice_vectors</strong>(:,:)</td><td></td><td></td><td><p>(<script type="math/tex">3\times 3</script>, a.u.) Lattice vectors in columns, unallocated if not
+ periodic.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-k_grid"></span>integer,</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>k_grid</strong>(3)</td><td> =</td><td>[-1, -1, -1]</td><td><p>Number of <script type="math/tex">k</script>-points along reciprocal axes.</p></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-parallel_mode"></span>character(len=10),</td>
+  
+  <td>public</td>
+  <td></td><td>::</td>
+  <td><strong>parallel_mode</strong></td><td> =</td><td>'auto'</td><td><p>Parallelization scheme.</p>
+<ul>
+<li><code>auto</code>: Pick based on system system size and number of <script type="math/tex">k</script>-points.</li>
+<li><code>kpoints</code>: Parallelize over <script type="math/tex">k</script>-points.</li>
+<li><code>atoms</code>: Parallelize over atom pairs.</li>
+</ul></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2021 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Libmbd was developed by </p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>
