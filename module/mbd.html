@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>mbd &ndash; Libmbd</title>
+    <title>mbd &ndash; libMBD</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">Libmbd </a>
+          <a class="navbar-brand" href="../index.html">libMBD </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -128,7 +128,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 9.9% of total for modules and submodules.">262 statements</a>
+    title=" 9.7% of total for modules and submodules.">264 statements</a>
      </li> 
      
      
@@ -218,6 +218,10 @@
   <ul class="list-inline">
     
     <li><a href='../module/mbd_constants.html'>mbd_constants</a></li>
+    
+    <li><a href='../module/mbd_defaults.html'>mbd_defaults</a></li>
+    
+    <li>mbd_version</li>
     
     <li><a href='../module/mbd_damping.html'>mbd_damping</a></li>
     
@@ -370,11 +374,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-max_atoms_per_block"></span>integer,</td>
+  <td><span class="anchor" id="variable-max_atoms_per_block~2"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>max_atoms_per_block</strong></td><td> =</td><td>6</td><td><p>Number of atoms per block in a BLACS grid.</p></td>
+  <td><strong>max_atoms_per_block</strong></td><td> =</td><td>MAX_ATOMS_PER_BLOCK</td><td><p>Number of atoms per block in a BLACS grid.</p></td>
   
 </tr>
 
@@ -482,7 +486,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-rpa_rescale_eigs"></span>logical,</td>
+  <td><span class="anchor" id="variable-rpa_rescale_eigs~2"></span>logical,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -500,7 +504,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>n_omega_grid</strong></td><td> =</td><td>15</td><td><p>Number of imaginary frequency grid points.</p></td>
+  <td><strong>n_omega_grid</strong></td><td> =</td><td>N_FREQUENCY_GRID</td><td><p>Number of imaginary frequency grid points.</p></td>
   
 </tr>
 
@@ -510,11 +514,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-k_grid_shift"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-k_grid_shift~2"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>k_grid_shift</strong></td><td> =</td><td>0.5d0</td><td><p>Off-<script type="math/tex">\Gamma</script> shift of the <script type="math/tex">k</script>-point grid in units of
+  <td><strong>k_grid_shift</strong></td><td> =</td><td>K_GRID_SHIFT</td><td><p>Off-<script type="math/tex">\Gamma</script> shift of the <script type="math/tex">k</script>-point grid in units of
  inter-<script type="math/tex">k</script>-point distance.</p></td>
   
 </tr>
@@ -525,7 +529,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-zero_negative_eigvals"></span>logical,</td>
+  <td><span class="anchor" id="variable-zero_negative_eigvals~2"></span>logical,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -553,11 +557,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-ts_d"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-ts_d~2"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>ts_d</strong></td><td> =</td><td>20d0</td><td><p>TS damping parameter <script type="math/tex">d</script>.</p></td>
+  <td><strong>ts_d</strong></td><td> =</td><td>TS_DAMPING_D</td><td><p>TS damping parameter <script type="math/tex">d</script>.</p></td>
   
 </tr>
 
@@ -567,7 +571,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-ts_sr"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-ts_sr~2"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -586,7 +590,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>mbd_a</strong></td><td> =</td><td>6d0</td><td><p>MBD damping parameter <script type="math/tex">a</script>.</p></td>
+  <td><strong>mbd_a</strong></td><td> =</td><td>MBD_DAMPING_A</td><td><p>MBD damping parameter <script type="math/tex">a</script>.</p></td>
   
 </tr>
 
@@ -660,7 +664,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-coords"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-coords~2"></span>real(kind=dp),</td>
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
@@ -689,7 +693,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-k_grid"></span>integer,</td>
+  <td><span class="anchor" id="variable-k_grid~2"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -703,7 +707,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-parallel_mode"></span>character(len=10),</td>
+  <td><span class="anchor" id="variable-parallel_mode~2"></span>character(len=10),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -745,10 +749,10 @@
       <table class="table table-striped varlist">
       <tbody>
       
-       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-init'>init</a></strong>  => mbd_calc_init </td>
+       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-init~3'>init</a></strong>  => mbd_calc_init </td>
        <td></td></tr>
       
-       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-destroy'>destroy</a></strong>  => mbd_calc_destroy </td>
+       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-destroy~2'>destroy</a></strong>  => mbd_calc_destroy </td>
        <td></td></tr>
       
        <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-switch_forces'>switch_forces</a></strong>  => mbd_calc_switch_forces </td>
@@ -787,7 +791,7 @@
        <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-get_spectrum_modes'>get_spectrum_modes</a></strong>  => mbd_calc_get_spectrum_modes </td>
        <td></td></tr>
       
-       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-get_rpa_orders'>get_rpa_orders</a></strong>  => mbd_calc_get_rpa_orders </td>
+       <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-get_rpa_orders~2'>get_rpa_orders</a></strong>  => mbd_calc_get_rpa_orders </td>
        <td></td></tr>
       
        <tr><td>procedure, public :: <strong><a href='../type/mbd_calc_t.html#boundprocedure-get_exception'>get_exception</a></strong>  => mbd_calc_get_exception </td>
@@ -818,7 +822,7 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2023 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
                                           </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
@@ -827,7 +831,7 @@
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Libmbd was developed by </p></div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> libMBD was developed by </p></div>
       </div>
       <br>
       </div> <!-- /container -->    

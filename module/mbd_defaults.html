@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>omega_qho &ndash; libMBD</title>
+    <title>mbd_defaults &ndash; libMBD</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -110,8 +110,8 @@
     
   
   <div class="row">
-    <h1>omega_qho
-      <small>Function</small>
+    <h1>mbd_defaults 
+    <small>Module</small>
     
     </h1>
     
@@ -128,24 +128,22 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 1.6% of total for procedures.">11 statements</a>
+    title=" 0.3% of total for modules and submodules.">9 statements</a>
      </li> 
      
      
      
-    <li><i class="fa fa-code"></i><a href="../src/mbd_formulas.f90"> Source File</a></li>
+    <li><i class="fa fa-code"></i><a href="../src/mbd_defaults.f90"> Source File</a></li>
      
      
   </ul>
   <ol class="breadcrumb in-well text-right">
   
     
-     <li><a href='../sourcefile/mbd_formulas.f90.html'>mbd_formulas.f90</a></li>
-    
-     <li><a href='../module/mbd_formulas.html'>mbd_formulas</a></li>
+     <li><a href='../sourcefile/mbd_defaults.f90.html'>mbd_defaults.f90</a></li>
     
   
-     <li class="active">omega_qho</li>
+     <li class="active">mbd_defaults</li>
   </ol>
 </div>
 </div>
@@ -194,116 +192,33 @@
     </div>
     
     <div class="col-md-9" id='text'>
-    <h2>
-public function omega_qho(C6, alpha, domega, grad) result(omega)
-    
-    
-   
-</h2>
+    <p>Defaults used at multiple places.</p>
+      <br>
     
   
-
-
-    
-    <p>
-<script type="math/tex; mode=display">
- \omega=\frac{4C_6}{3\alpha_{0}^2},\qquad
- \partial\omega=\omega\left(
- \frac{\partial C_6}{C_6}-\frac{2\partial\alpha_0}{\alpha_0}
- \right)
- </script>
-</p>
-    
-
-    <h3>Arguments</h3>
-    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
       
-<table class="table table-striped varlist">
-<thead><tr><th>Type</th>
-<th>Intent</th><th>Optional</th>
-<th>Attributes</th><th></th><th>Name</th><th></th></thead>
-
-
-
-<tbody>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-c6~2"></span>real(kind=dp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>C6</strong>(:)</td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-alpha~2"></span>real(kind=dp),</td>
-  <td>intent(in)</td>
-  <td></td>
-  
-  <td></td><td>::</td>
-  <td><strong>alpha</strong>(:)</td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-domega~3"></span>type(<a href='../type/grad_t.html'>grad_t</a>),</td>
-  <td>intent(out),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>domega</strong></td><td></td>
-  
-</tr>
-
-  
-  
-  
-  
-<tr>
-  
-  <td><span class="anchor" id="variable-grad~2"></span>type(<a href='../type/grad_request_t.html'>grad_request_t</a>),</td>
-  <td>intent(in),</td>
-  <td>optional</td>
-  
-  <td></td><td>::</td>
-  <td><strong>grad</strong></td><td></td>
-  
-</tr>
-
-</tbody>
-</table>
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href='../module/mbd_constants.html'>mbd_constants</a></li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      </ul>
+    </div>
+    
 
     
     
-    
-    
-    
-    
-    
-   <h3>Return Value <small><span class="anchor" id="variable-omega"></span>real(kind=dp)
-  (size(C6))</small></h3>
-    
-    
-    
-    
-     
+
     <br>
 
     <section class="visible-xs visible-sm hidden-md">
@@ -351,15 +266,13 @@ public function omega_qho(C6, alpha, domega, grad) result(omega)
     
     
 
-
-    
     
     
     
     </div>
   </div>
 
-
+  
     <hr>    
     </div> <!-- /container -->
     <footer>

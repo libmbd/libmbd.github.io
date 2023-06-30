@@ -66,7 +66,9 @@ type(result_t) function get_mbd_energy(geom, alpha_0, C6, damp, grad) result(res
     if (grad%dlattice) grad_ham%dq = .true.
     if (.not. allocated(geom%lattice)) then
         if (.not. geom%do_rpa) then
+            call geom%clock(52)
             res = get_mbd_hamiltonian_energy(geom, alpha_0, omega, damp, grad_ham)
+            call geom%clock(-52)
             if (grad%dC6) res%dE%dC6 = res%dE%domega * domega%dC6
             if (grad%dalpha) res%dE%dalpha = res%dE%dalpha + res%dE%domega * domega%dalpha
             if (allocated(res%dE%domega)) deallocate (res%dE%domega)
@@ -114,7 +116,7 @@ type(result_t) function get_mbd_energy(geom, alpha_0, C6, damp, grad) result(res
                 end if
             end associate
             call geom%clock(-51)
-            if (geom%has_exc()) return
+            if (geom%has_exc()) exit
             if (geom%get_eigs) then
                 res%mode_eigs_k(:, i_kpt) = res_k%mode_eigs
             end if
@@ -142,6 +144,7 @@ type(result_t) function get_mbd_energy(geom, alpha_0, C6, damp, grad) result(res
         end do
 #ifdef WITH_MPI
         if (geom%parallel_mode == 'k_points') then
+            call geom%sync_exc()
             call mpi_all_reduce(res%energy, geom%mpi_comm)
             if (grad%dcoords) call mpi_all_reduce(res%dE%dcoords, geom%mpi_comm)
             if (grad%dlattice) call mpi_all_reduce(res%dE%dlattice, geom%mpi_comm)
@@ -219,6 +222,8 @@ type(result_t) function get_mbd_scs_energy(geom, variant, alpha_0, C6, damp, gra
             dalpha=grad%any(), dC6=grad%any(), dr_vdw=grad%any() &
         ) &
     )
+    res%alpha_0 = alpha_dyn_scs(:, 0)
+    res%C6 = C6_scs
     call geom%clock(-90)
     if (geom%has_exc()) return
     if (.not. grad%any()) return

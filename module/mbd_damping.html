@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>mbd_damping &ndash; Libmbd</title>
+    <title>mbd_damping &ndash; libMBD</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">Libmbd </a>
+          <a class="navbar-brand" href="../index.html">libMBD </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -128,7 +128,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 4.9% of total for modules and submodules.">129 statements</a>
+    title=" 4.8% of total for modules and submodules.">130 statements</a>
      </li> 
      
      
@@ -228,6 +228,8 @@
   <ul class="list-inline">
     
     <li><a href='../module/mbd_constants.html'>mbd_constants</a></li>
+    
+    <li><a href='../module/mbd_defaults.html'>mbd_defaults</a></li>
     
     <li><a href='../module/mbd_gradients.html'>mbd_gradients</a></li>
     
@@ -374,7 +376,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>a</strong></td><td> =</td><td>6d0</td><td></td>
+  <td><strong>a</strong></td><td> =</td><td>MBD_DAMPING_A</td><td></td>
   
 </tr>
 
@@ -384,11 +386,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-ts_d~2"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-ts_d"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>ts_d</strong></td><td> =</td><td>20d0</td><td></td>
+  <td><strong>ts_d</strong></td><td> =</td><td>TS_DAMPING_D</td><td></td>
   
 </tr>
 
@@ -398,7 +400,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-ts_sr~2"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-ts_sr"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -662,7 +664,7 @@ public function <a href='../proc/damping_fermi.html'>damping_fermi</a>(r, s_vdw,
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2023 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
                                           </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
@@ -671,7 +673,7 @@ public function <a href='../proc/damping_fermi.html'>damping_fermi</a>(r, s_vdw,
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Libmbd was developed by </p></div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> libMBD was developed by </p></div>
       </div>
       <br>
       </div> <!-- /container -->    

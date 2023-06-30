@@ -4,12 +4,12 @@
 #ifndef LEGENDRE_PREC
 #define LEGENDRE_PREC 15
 #endif
-#include "defaults.h"
 
 module mbd_geom
 !! Representing a molecule or a crystal unit cell.
 
 use mbd_constants
+use mbd_defaults
 use mbd_formulas, only: alpha_dyn_qho, C6_from_alpha, omega_qho
 use mbd_gradients, only: grad_t, grad_request_t
 use mbd_lapack, only: eigvals, inverse
@@ -73,7 +73,11 @@ type, public :: geom_t
     type(logger_t) :: log
         !! Used for logging
 #ifdef WITH_MPI
+#   ifdef WITH_MPIF08
+    type(MPI_Comm) :: mpi_comm = MPI_COMM_WORLD
+#   else
     integer :: mpi_comm = MPI_COMM_WORLD
+#   endif
         !! MPI communicator
 #endif
 #ifdef WITH_SCALAPACK
@@ -103,6 +107,9 @@ type, public :: geom_t
     procedure :: destroy => geom_destroy
     procedure :: siz => geom_siz
     procedure :: has_exc => geom_has_exc
+#ifdef WITH_MPI
+    procedure :: sync_exc => geom_sync_exc
+#endif
     procedure :: clock => geom_clock
 end type
 
@@ -114,12 +121,15 @@ subroutine geom_init(this)
     integer :: i_atom
     real(dp) :: volume, freq_grid_err
     logical :: is_parallel
+    character(len=10) :: log_level_str
 #ifdef WITH_MPI
     logical :: can_parallel_kpts
     integer :: ierr, n_kpts
 #endif
 
     if (.not. associated(this%log%printer)) this%log%printer => printer
+    call get_environment_variable('LIBMBD_LOG_LEVEL', log_level_str)
+    if (log_level_str /= '') read (log_level_str, *) this%log%level
     associate (n => this%param%n_freq)
         allocate (this%freq(0:n))
         call get_freq_grid(n, this%freq(1:n)%val, this%freq(1:n)%weight)
@@ -158,7 +168,11 @@ subroutine geom_init(this)
     this%idx%parallel = .false.
     if (this%parallel_mode == 'auto' .or. this%parallel_mode == 'atoms') then
 #   ifdef WITH_MPI
+#       ifdef WITH_MPIF08
+        call this%blacs_grid%init(this%mpi_comm%mpi_val)
+#       else
         call this%blacs_grid%init(this%mpi_comm)
+#       endif
 #   else
         call this%blacs_grid%init()
 #   endif
@@ -192,6 +206,10 @@ subroutine geom_init(this)
     call this%log%info('Will use parallel mode: '//this%parallel_mode)
 #ifdef WITH_SCALAPACK
     if (this%idx%parallel) then
+        call this%log%info( &
+            'BLACS grid: '//trim(tostr(this%blacs_grid%nprows))//' x ' &
+            //trim(tostr(this%blacs_grid%npcols)) &
+        )
         call this%log%info('BLACS block size: '//tostr(this%blacs%blocksize))
     end if
 #endif
@@ -223,6 +241,30 @@ logical function geom_has_exc(this) result(has_exc)
 
     has_exc = this%exc%code /= 0
 end function
+
+#ifdef WITH_MPI
+subroutine geom_sync_exc(this)
+    class(geom_t), intent(in) :: this
+
+    integer, allocatable :: codes(:)
+    integer :: err, rank
+
+    allocate (codes(this%mpi_size))
+    call MPI_ALLGATHER(this%exc%code, 1, MPI_INTEGER, codes, 1, MPI_INTEGER, this%mpi_comm, err)
+    do rank = 0, size(codes) - 1
+        if (codes(rank + 1) /= 0) then
+            call MPI_BCAST(this%exc%code, 1, MPI_INTEGER, rank, this%mpi_comm, err)
+            call MPI_BCAST( &
+                this%exc%msg, len(this%exc%msg), MPI_CHARACTER, rank, this%mpi_comm, err &
+            )
+            call MPI_BCAST( &
+                this%exc%origin, len(this%exc%origin), MPI_CHARACTER, rank, this%mpi_comm, err &
+            )
+            exit
+        end if
+    end do
+end subroutine
+#endif
 
 function supercell_circum(lattice, radius) result(sc)
     real(dp), intent(in) :: lattice(3, 3)

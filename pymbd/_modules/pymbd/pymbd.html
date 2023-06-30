@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pymbd.pymbd &#8212; Libmbd 0.12.1.post2.dev0+6c7235b documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <title>pymbd.pymbd &#8212; libMBD 0.12.7 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -52,7 +53,7 @@
 
 
 <div class="viewcode-block" id="screening"><a class="viewcode-back" href="../../api.html#pymbd.screening">[docs]</a><span class="k">def</span> <span class="nf">screening</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">lattice</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nfreq</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Screen atomic polarizabilities.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Screen atomic polarizabilities.</span>
 
 <span class="sd">    :param array-like coords: (a.u.) atom coordinates in rows</span>
 <span class="sd">    :param array-like alpha_0: (a.u.) atomic polarizabilities</span>
@@ -66,7 +67,7 @@
 <span class="sd">    :math:`R_\mathrm{vdw}` coefficients (a.u.).</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">freq</span><span class="p">,</span> <span class="n">freq_w</span> <span class="o">=</span> <span class="n">freq_grid</span><span class="p">(</span><span class="n">nfreq</span><span class="p">)</span>
-    <span class="n">omega</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">C6</span> <span class="o">/</span> <span class="n">alpha_0</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">omega</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">C6</span> <span class="o">/</span> <span class="n">alpha_0</span><span class="o">**</span><span class="mi">2</span>
     <span class="n">alpha_dyn</span> <span class="o">=</span> <span class="p">[</span><span class="n">alpha_0</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">u</span> <span class="o">/</span> <span class="n">omega</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">freq</span><span class="p">]</span>
     <span class="n">alpha_dyn_rsscs</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="n">alpha_dyn</span><span class="p">:</span>
@@ -78,13 +79,13 @@
         <span class="n">a_contr</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">a_nlc</span><span class="p">[</span><span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">,</span> <span class="n">i</span><span class="p">::</span><span class="mi">3</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span> <span class="o">/</span> <span class="mi">3</span>
         <span class="n">alpha_dyn_rsscs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a_contr</span><span class="p">)</span>
     <span class="n">alpha_dyn_rsscs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">alpha_dyn_rsscs</span><span class="p">)</span>
-    <span class="n">C6_rsscs</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">freq_w</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha_dyn_rsscs</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">C6_rsscs</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">freq_w</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha_dyn_rsscs</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
     <span class="n">R_vdw_rsscs</span> <span class="o">=</span> <span class="n">R_vdw</span> <span class="o">*</span> <span class="p">(</span><span class="n">alpha_dyn_rsscs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">alpha_0</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">alpha_dyn_rsscs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">C6_rsscs</span><span class="p">,</span> <span class="n">R_vdw_rsscs</span></div>
 
 
 <div class="viewcode-block" id="mbd_energy"><a class="viewcode-back" href="../../api.html#pymbd.mbd_energy">[docs]</a><span class="k">def</span> <span class="nf">mbd_energy</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">lattice</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">k_grid</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nfreq</span><span class="o">=</span><span class="mi">15</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy.</span>
 
 <span class="sd">    :param array-like coords: (a.u.) atom coordinates in rows</span>
 <span class="sd">    :param array-like alpha_0: (a.u.) atomic polarizabilities</span>
@@ -101,7 +102,7 @@
     <span class="n">alpha_0_rsscs</span><span class="p">,</span> <span class="n">C6_rsscs</span><span class="p">,</span> <span class="n">R_vdw_rsscs</span> <span class="o">=</span> <span class="n">screening</span><span class="p">(</span>
         <span class="n">coords</span><span class="p">,</span> <span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">lattice</span><span class="o">=</span><span class="n">lattice</span><span class="p">,</span> <span class="n">nfreq</span><span class="o">=</span><span class="mi">15</span>
     <span class="p">)</span>
-    <span class="n">omega_rsscs</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">C6_rsscs</span> <span class="o">/</span> <span class="n">alpha_0_rsscs</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">omega_rsscs</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">/</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">C6_rsscs</span> <span class="o">/</span> <span class="n">alpha_0_rsscs</span><span class="o">**</span><span class="mi">2</span>
     <span class="n">pre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">omega_rsscs</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">alpha_0_rsscs</span><span class="p">),</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">lattice</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">k_points</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
@@ -111,7 +112,7 @@
     <span class="n">ene</span> <span class="o">=</span> <span class="mf">0.0</span>
     <span class="k">for</span> <span class="n">k_point</span> <span class="ow">in</span> <span class="n">k_points</span><span class="p">:</span>
         <span class="n">eigs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eigvalsh</span><span class="p">(</span>
-            <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">omega_rsscs</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">omega_rsscs</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
             <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">pre</span><span class="p">,</span> <span class="n">pre</span><span class="p">)</span>
             <span class="o">*</span> <span class="n">dipole_matrix</span><span class="p">(</span>
                 <span class="n">coords</span><span class="p">,</span>
@@ -128,7 +129,7 @@
 
 
 <div class="viewcode-block" id="mbd_energy_species"><a class="viewcode-back" href="../../api.html#pymbd.mbd_energy_species">[docs]</a><span class="k">def</span> <span class="nf">mbd_energy_species</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">volume_ratios</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy from atom types and Hirshfed-volume ratios.</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy from atom types and Hirshfed-volume ratios.</span>
 
 <span class="sd">    :param array-like coords: (a.u.) atom coordinates in rows</span>
 <span class="sd">    :param array-like species: atom types (elements)</span>
@@ -161,7 +162,7 @@
     <span class="k">for</span> <span class="n">idx_cell</span> <span class="ow">in</span> <span class="n">product</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">range_cell</span><span class="p">)):</span>
         <span class="n">R_cell</span> <span class="o">=</span> <span class="n">lattice</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">idx_cell</span><span class="p">)</span> <span class="k">if</span> <span class="n">lattice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
         <span class="n">Rs</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">-</span> <span class="n">coords</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">+</span> <span class="n">R_cell</span>
-        <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Rs</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+        <span class="n">dists</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Rs</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
         <span class="k">if</span> <span class="n">damping</span> <span class="o">==</span> <span class="s1">&#39;fermi,dip&#39;</span><span class="p">:</span>
             <span class="n">T</span> <span class="o">=</span> <span class="n">damping_fermi</span><span class="p">(</span><span class="n">dists</span><span class="p">,</span> <span class="n">S_vdw</span><span class="p">,</span> <span class="n">a</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">T_bare</span><span class="p">(</span><span class="n">Rs</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">damping</span> <span class="o">==</span> <span class="s1">&#39;fermi,dip,gg&#39;</span><span class="p">:</span>
@@ -198,28 +199,28 @@
             <span class="k">continue</span>
         <span class="n">gvec</span> <span class="o">=</span> <span class="n">rlattice</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">idx_gvec</span><span class="p">)</span>
         <span class="n">k_total</span> <span class="o">=</span> <span class="n">k_point</span> <span class="o">+</span> <span class="n">gvec</span> <span class="k">if</span> <span class="n">k_point</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">gvec</span>
-        <span class="n">k_sq</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k_total</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">k_sq</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">k_total</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k_sq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">rec_space_cutoff</span><span class="p">:</span>
             <span class="k">continue</span>
         <span class="n">k_prefactor</span> <span class="o">=</span> <span class="p">(</span>
             <span class="mi">4</span>
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
             <span class="o">/</span> <span class="n">volume</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_sq</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_sq</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
             <span class="o">/</span> <span class="n">k_sq</span>
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">k_total</span><span class="p">,</span> <span class="n">k_total</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="n">dipmat</span> <span class="o">+=</span> <span class="n">k_prefactor</span> <span class="o">*</span> <span class="n">fourier_factor</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">gvec</span> <span class="o">*</span> <span class="n">Rs</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">dipmat</span> <span class="o">+=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">Rs</span><span class="p">))[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)),</span> <span class="mi">3</span><span class="p">)</span>
     <span class="p">)</span>
-    <span class="n">k_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">k_point</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">k_point</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="n">k_sq</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">k_point</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">if</span> <span class="n">k_point</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="mi">0</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k_sq</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-15</span><span class="p">:</span>
         <span class="n">dipmat</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="mi">4</span>
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span>
             <span class="o">/</span> <span class="n">volume</span>
-            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_sq</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">k_sq</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">alpha</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
             <span class="o">/</span> <span class="n">k_sq</span>
             <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">outer</span><span class="p">(</span><span class="n">k_point</span><span class="p">,</span> <span class="n">k_point</span><span class="p">)</span>
         <span class="p">)</span>
@@ -230,7 +231,7 @@
 
 <span class="k">def</span> <span class="nf">supercell_circum</span><span class="p">(</span><span class="n">latt</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
     <span class="n">rlatt</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">latt</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
-    <span class="n">layer_sep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">latt</span> <span class="o">*</span> <span class="n">rlatt</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">rlatt</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">layer_sep</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">latt</span> <span class="o">*</span> <span class="n">rlatt</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">rlatt</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">radius</span> <span class="o">/</span> <span class="n">layer_sep</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
 
@@ -239,7 +240,7 @@
 
 
 <span class="k">def</span> <span class="nf">T_bare</span><span class="p">(</span><span class="n">R</span><span class="p">):</span>
-    <span class="n">R_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">R_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">R_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">R_2</span><span class="p">)</span> <span class="o">**</span> <span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="o">-</span><span class="mi">3</span> <span class="o">*</span> <span class="n">R</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">R</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span>
@@ -249,23 +250,23 @@
 
 <span class="k">def</span> <span class="nf">T_erf_coulomb</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
     <span class="n">bare</span> <span class="o">=</span> <span class="n">T_bare</span><span class="p">(</span><span class="n">R</span><span class="p">)</span>
-    <span class="n">R_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
-    <span class="n">R_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span> <span class="o">**</span> <span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">R_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">R_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
     <span class="n">RR_R5</span> <span class="o">=</span> <span class="n">R</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">R</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="p">:]</span> <span class="o">/</span> <span class="n">R_5</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
     <span class="n">zeta</span> <span class="o">=</span> <span class="n">R_1</span> <span class="o">/</span> <span class="n">sigma</span>
-    <span class="n">theta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">zeta</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">zeta</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">zeta</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
     <span class="n">erf_theta</span> <span class="o">=</span> <span class="n">erf</span><span class="p">(</span><span class="n">zeta</span><span class="p">)</span> <span class="o">-</span> <span class="n">theta</span>
     <span class="k">return</span> <span class="p">(</span>
         <span class="n">erf_theta</span><span class="p">[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">bare</span>
-        <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">zeta</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">RR_R5</span>
+        <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">zeta</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">theta</span><span class="p">)[:,</span> <span class="p">:,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="o">*</span> <span class="n">RR_R5</span>
     <span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">T_erfc</span><span class="p">(</span><span class="n">R</span><span class="p">,</span> <span class="n">a</span><span class="p">):</span>
-    <span class="n">R_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">R_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">R</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">R_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">R_2</span><span class="p">)</span>
-    <span class="n">R_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span> <span class="o">**</span> <span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
-    <span class="n">R_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span> <span class="o">**</span> <span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">R_3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span><span class="o">**</span><span class="mi">3</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">R_5</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">R_1</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">R_1</span><span class="o">**</span><span class="mi">5</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
     <span class="n">B</span> <span class="o">=</span> <span class="p">(</span>
         <span class="n">erfc</span><span class="p">(</span><span class="n">a</span> <span class="o">*</span> <span class="n">R_1</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">a</span> <span class="o">*</span> <span class="n">R_1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="n">a</span> <span class="o">*</span> <span class="n">R_1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
     <span class="p">)</span> <span class="o">/</span> <span class="n">R_3</span>
@@ -306,7 +307,7 @@
         <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Unkonwn vdW parameter kind: </span><span class="si">{</span><span class="n">kind</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
     <span class="n">volumes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">volumes</span><span class="p">)</span>
     <span class="n">alpha_0</span> <span class="o">*=</span> <span class="n">volumes</span>
-    <span class="n">C6</span> <span class="o">*=</span> <span class="n">volumes</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">C6</span> <span class="o">*=</span> <span class="n">volumes</span><span class="o">**</span><span class="mi">2</span>
     <span class="n">R_vdw</span> <span class="o">*=</span> <span class="n">volumes</span> <span class="o">**</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">3</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span>
 
@@ -351,7 +352,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">Libmbd</a></h1>
+<h1 class="logo"><a href="../../index.html">libMBD</a></h1>
 
 
 
@@ -367,18 +368,6 @@
 
 
 
-
-
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/libmbd/libmbd">
-    <img
-        alt="https://secure.travis-ci.org/libmbd/libmbd.svg?branch=master"
-        src="https://secure.travis-ci.org/libmbd/libmbd.svg?branch=master"
-    />
-</a>
-</p>
 
 
 
@@ -422,11 +411,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018-2021, Jan Hermann.
+      &copy;2018-2023, Jan Hermann.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
     </div>
 

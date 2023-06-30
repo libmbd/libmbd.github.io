@@ -190,7 +190,6 @@ type(matrix_cplx_t) function dipole_matrix_complex( &
                     sigma_ij = damp%mayer_scaling &
                         * sqrt(sum(damp%sigma([i_atom, j_atom])**2))
                 end if
-                call geom%clock(13)
                 select case (damp%version)
                     case ("bare")
                         T = T_bare(Rnij, dT, grad_ij%dcoords)
@@ -223,7 +222,6 @@ type(matrix_cplx_t) function dipole_matrix_complex( &
                             T_erf_coulomb(Rnij, sigma_ij)
                         do_ewald = .false.
                 end select
-                call geom%clock(-13)
                 if (grad_ij%dr_vdw) dT%dvdw = damp%beta * dT%dvdw
                 if (do_ewald) then
                     T = T &
@@ -239,7 +237,11 @@ type(matrix_cplx_t) function dipole_matrix_complex( &
                 exp_qR = exp(-IMI * (dot_product(q, Rnij)))
                 Tij = T * exp_qR
                 if (grad_ij%dcoords) then
+#ifndef WITHOUT_DO_CONCURRENT
                     do concurrent(i=1:3)
+#else
+                    do i = 1, 3
+#endif
                         dTij%dr(:, :, i) = dT%dr(:, :, i) * exp_qR - IMI * q(i) * Tij
                     end do
                 end if
@@ -623,11 +625,20 @@ function T_erfc(r, gamm, dT, grad) result(T)
         r_7 = r_1**7
         r_4 = r_2**2
         r_6 = r_4 * r_2
+#ifndef WITHOUT_DO_CONCURRENT
         do concurrent(c=1:3)
+#else
+        do c = 1, 3
+#endif
             dT%dr(c, c, c) = &
                 -(2 * r(c) / r_5 - 5 * r(c)**3 / r_7) * C_ew - 3 * r(c) / r_5 * B_ew &
                 - r(c)**3 / r_6 * dC%dr_1 + r(c) / r_4 * dB%dr_1
+#ifndef WITHOUT_DO_CONCURRENT
             do concurrent(a=1:3, a /= c)
+#else
+            do a = 1, 3
+                if (a == c) cycle
+#endif
                 dT%dr(a, c, c) = &
                     -(r(a) / r_5 - 5 * r(a) * r(c)**2 / r_7) * C_ew &
                     - r(a) * r(c)**2 / r_6 * dC%dr_1
@@ -635,7 +646,12 @@ function T_erfc(r, gamm, dT, grad) result(T)
                 dT%dr(a, a, c) = &
                     5 * r(a)**2 * r(c) / r_7 * C_ew - 3 * r(c) / r_5 * B_ew &
                     - r(a)**2 * r(c) / r_6 * dC%dr_1 + r(c) / r_4 * dB%dr_1
+#ifndef WITHOUT_DO_CONCURRENT
                 do concurrent(b=a + 1:3, b /= c)
+#else
+                do b = a + 1, 3
+                    if (b == c) cycle
+#endif
                     dT%dr(a, b, c) = &
                         5 * r(a) * r(b) * r(c) / r_7 * C_ew - r(a) * r(b) * r(c) / r_6 * dC%dr_1
                     dT%dr(b, a, c) = dT%dr(a, b, c)

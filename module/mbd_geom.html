@@ -10,7 +10,7 @@
     <meta name="author" content="" >
     <link rel="icon" href="../favicon.png">
 
-    <title>mbd_geom &ndash; Libmbd</title>
+    <title>mbd_geom &ndash; libMBD</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/pygments.css" rel="stylesheet">
@@ -46,7 +46,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="../index.html">Libmbd </a>
+          <a class="navbar-brand" href="../index.html">libMBD </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -128,7 +128,7 @@
      <li><i class="fa fa-list-ol"></i>
        <a data-toggle="tooltip"
     data-placement="bottom" data-html="true"
-    title=" 8.6% of total for modules and submodules.">228 statements</a>
+    title=" 9.1% of total for modules and submodules.">249 statements</a>
      </li> 
      
      
@@ -218,6 +218,8 @@
   <ul class="list-inline">
     
     <li><a href='../module/mbd_constants.html'>mbd_constants</a></li>
+    
+    <li><a href='../module/mbd_defaults.html'>mbd_defaults</a></li>
     
     <li><a href='../module/mbd_formulas.html'>mbd_formulas</a></li>
     
@@ -374,11 +376,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-k_grid_shift~2"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-k_grid_shift"></span>real(kind=dp),</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>k_grid_shift</strong></td><td> =</td><td>0.5d0</td><td></td>
+  <td><strong>k_grid_shift</strong></td><td> =</td><td>K_GRID_SHIFT</td><td></td>
   
 </tr>
 
@@ -402,7 +404,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-zero_negative_eigvals~2"></span>logical,</td>
+  <td><span class="anchor" id="variable-zero_negative_eigvals"></span>logical,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -416,7 +418,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-rpa_rescale_eigs~2"></span>logical,</td>
+  <td><span class="anchor" id="variable-rpa_rescale_eigs"></span>logical,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -448,7 +450,7 @@
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>n_freq</strong></td><td> =</td><td>15</td><td></td>
+  <td><strong>n_freq</strong></td><td> =</td><td>N_FREQUENCY_GRID</td><td></td>
   
 </tr>
 
@@ -492,7 +494,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-coords~2"></span>real(kind=dp),</td>
+  <td><span class="anchor" id="variable-coords"></span>real(kind=dp),</td>
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
@@ -521,7 +523,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-k_grid~2"></span>integer,</td>
+  <td><span class="anchor" id="variable-k_grid"></span>integer,</td>
   
   <td>public,</td>
   <td>allocatable</td><td>::</td>
@@ -549,7 +551,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-parallel_mode~2"></span>character(len=10),</td>
+  <td><span class="anchor" id="variable-parallel_mode"></span>character(len=10),</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -611,7 +613,7 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-get_rpa_orders~2"></span>logical,</td>
+  <td><span class="anchor" id="variable-get_rpa_orders"></span>logical,</td>
   
   <td>public</td>
   <td></td><td>::</td>
@@ -653,11 +655,11 @@
   
 <tr>
   
-  <td><span class="anchor" id="variable-max_atoms_per_block~2"></span>integer,</td>
+  <td><span class="anchor" id="variable-max_atoms_per_block"></span>integer,</td>
   
   <td>public</td>
   <td></td><td>::</td>
-  <td><strong>max_atoms_per_block</strong></td><td> =</td><td>6</td><td></td>
+  <td><strong>max_atoms_per_block</strong></td><td> =</td><td>MAX_ATOMS_PER_BLOCK</td><td></td>
   
 </tr>
 
@@ -840,10 +842,10 @@
       <table class="table table-striped varlist">
       <tbody>
       
-       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-init~3'>init</a></strong>  => geom_init </td>
+       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-init'>init</a></strong>  => geom_init </td>
        <td></td></tr>
       
-       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-destroy~2'>destroy</a></strong>  => geom_destroy </td>
+       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-destroy'>destroy</a></strong>  => geom_destroy </td>
        <td></td></tr>
       
        <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-siz'>siz</a></strong>  => geom_siz </td>
@@ -852,7 +854,10 @@
        <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-has_exc'>has_exc</a></strong>  => geom_has_exc </td>
        <td></td></tr>
       
-       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-clock~2'>clock</a></strong>  => geom_clock </td>
+       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-sync_exc'>sync_exc</a></strong>  => geom_sync_exc </td>
+       <td></td></tr>
+      
+       <tr><td>procedure, public :: <strong><a href='../type/geom_t.html#boundprocedure-clock'>clock</a></strong>  => geom_clock </td>
        <td></td></tr>
       
        </tbody>
@@ -880,7 +885,7 @@
     <footer>
       <div class="container">
       <div class="row">
-        <div class="col-xs-6 col-md-4"><p>&copy; 2021 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+        <div class="col-xs-6 col-md-4"><p>&copy; 2023 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
                                           </p></div>
         <div class="col-xs-6 col-md-4 col-md-push-4">
           <p class="text-right">
@@ -889,7 +894,7 @@
             
           </p>
         </div>
-        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Libmbd was developed by </p></div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> libMBD was developed by </p></div>
       </div>
       <br>
       </div> <!-- /container -->    

@@ -1,18 +1,20 @@
 ! This Source Code Form is subject to the terms of the Mozilla Public
 ! License, v. 2.0. If a copy of the MPL was not distributed with this
 ! file, You can obtain one at http://mozilla.org/MPL/2.0/.
-#include "version.h"
-#include "defaults.h"
-
 module mbd
 !! High-level Fortran API.
 
 use mbd_constants
+use mbd_defaults
+use mbd_version
 use mbd_damping, only: damping_t
 use mbd_formulas, only: scale_with_ratio
 use mbd_geom, only: geom_t
 use mbd_gradients, only: grad_request_t, grad_t
 use mbd_methods, only: get_mbd_energy, get_mbd_scs_energy
+#ifdef WITH_MPIF08
+use mbd_mpi
+#endif
 use mbd_ts, only: get_ts_energy
 use mbd_utils, only: result_t, exception_t, printer_i
 use mbd_vdw_param, only: ts_vdw_params, tssurf_vdw_params, species_index
@@ -21,10 +23,7 @@ implicit none
 
 private
 
-integer, parameter, public :: mbd_version_major = MBD_VERSION_MAJOR
-integer, parameter, public :: mbd_version_minor = MBD_VERSION_MINOR
-integer, parameter, public :: mbd_version_patch = MBD_VERSION_PATCH
-
+public :: MBD_VERSION_MAJOR, MBD_VERSION_MINOR, MBD_VERSION_PATCH, MBD_VERSION_SUFFIX
 public :: MBD_EXC_NEG_EIGVALS, MBD_EXC_NEG_POL, MBD_EXC_LINALG, MBD_EXC_UNIMPL, &
     MBD_EXC_DAMPING, MBD_EXC_INPUT
 
@@ -37,7 +36,11 @@ type, public :: mbd_input_t
         !! - `mbd-nl`: The MBD-NL method.
         !! - `ts`: The TS method.
         !! - `mbd`: Generic MBD method (without any screening).
+#ifdef WITH_MPIF08
+    type(MPI_Comm) :: comm = MPI_COMM_NULL
+#else
     integer :: comm = -1
+#endif
         !! MPI communicator.
         !!
         !! Only used when compiled with MPI. Leave as is to use the
@@ -151,7 +154,13 @@ subroutine mbd_calc_init(this, input)
         !! MBD input.
 
 #ifdef WITH_MPI
-    if (input%comm /= -1) this%geom%mpi_comm = input%comm
+#   ifdef WITH_MPIF08
+    if (input%comm /= MPI_COMM_NULL) then
+#   else
+    if (input%comm /= -1) then
+#   endif
+        this%geom%mpi_comm = input%comm
+    end if
 #endif
 #ifdef WITH_SCALAPACK
     this%geom%max_atoms_per_block = input%max_atoms_per_block

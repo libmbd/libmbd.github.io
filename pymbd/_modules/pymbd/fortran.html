@@ -1,17 +1,18 @@
 
 <!DOCTYPE html>
 
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>pymbd.fortran &#8212; Libmbd 0.12.1.post2.dev0+6c7235b documentation</title>
-    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <title>pymbd.fortran &#8212; libMBD 0.12.7 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
    
@@ -36,6 +37,7 @@
 <span class="c1"># file, You can obtain one at http://mozilla.org/MPL/2.0/.</span>
 <span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span>
 
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -46,20 +48,21 @@
 <span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">._libmbd</span> <span class="kn">import</span> <span class="n">ffi</span> <span class="k">as</span> <span class="n">_ffi</span><span class="p">,</span> <span class="n">lib</span> <span class="k">as</span> <span class="n">_lib</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Pymbd C extension unimportable, cannot use Fortran&#39;</span><span class="p">)</span>
+    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;pyMBD C extension unimportable, cannot use Fortran&#39;</span><span class="p">)</span> <span class="kn">from</span> <span class="kc">None</span>
 
 <span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;MBDGeom&#39;</span><span class="p">,</span> <span class="s1">&#39;with_mpi&#39;</span><span class="p">,</span> <span class="s1">&#39;with_scalapack&#39;</span><span class="p">]</span>
 
 <span class="n">with_mpi</span> <span class="o">=</span> <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_with_mpi</span>
-<span class="sd">&quot;&quot;&quot;Whether Libmbd was compiled with MPI&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Whether libMBD was compiled with MPI&quot;&quot;&quot;</span>
 
 <span class="n">with_scalapack</span> <span class="o">=</span> <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_with_scalapack</span>
-<span class="sd">&quot;&quot;&quot;Whether Libmbd was compiled with Scalapack&quot;&quot;&quot;</span>
+<span class="sd">&quot;&quot;&quot;Whether libMBD was compiled with Scalapack&quot;&quot;&quot;</span>
 
 <span class="n">LIBMBD_VERSION</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_version_major</span><span class="p">,</span>
     <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_version_minor</span><span class="p">,</span>
     <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_version_patch</span><span class="p">,</span>
+    <span class="n">_ffi</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_version_suffix</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span>
 <span class="p">)</span>
 
 <span class="c1"># do not test versions when running autodoc</span>
@@ -69,14 +72,14 @@
         <span class="k">assert</span> <span class="n">PYMBD_VERSION</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">LIBMBD_VERSION</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">assert</span> <span class="n">PYMBD_VERSION</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">LIBMBD_VERSION</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">PYMBD_VERSION</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">git_commit</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;[+-]&#39;</span><span class="p">,</span> <span class="n">PYMBD_VERSION</span><span class="p">[</span><span class="mi">3</span><span class="p">])[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">assert</span> <span class="n">LIBMBD_VERSION</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">git_commit</span><span class="p">)</span>
 
-<span class="k">if</span> <span class="n">with_mpi</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">mpi4py</span> <span class="kn">import</span> <span class="n">MPI</span>  <span class="c1"># noqa</span>
 
-
-<span class="k">class</span> <span class="nc">MBDFortranException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="k">class</span> <span class="nc">MBDFortranError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">code</span><span class="p">,</span> <span class="n">origin</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MBDFortranException</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MBDFortranError</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">=</span> <span class="n">code</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="n">origin</span>
 
@@ -93,7 +96,7 @@
 
 
 <div class="viewcode-block" id="MBDGeom"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom">[docs]</a><span class="k">class</span> <span class="nc">MBDGeom</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Represents an initialized Libmbd `geom_t &lt;../type/geom_t.html&gt;`_ object.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an initialized libMBD `geom_t &lt;../type/geom_t.html&gt;`_ object.</span>
 
 <span class="sd">    :param array-like coords: (a.u.) atomic coordinates as rows</span>
 <span class="sd">    :param array-like lattice: (a.u.) lattice vectors as rows</span>
@@ -118,6 +121,7 @@
         <span class="n">get_rpa_orders</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">rpa_rescale_eigs</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
         <span class="n">max_atoms_per_block</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">ewald_cutoff_scaling</span><span class="o">=</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span>
     <span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lattice</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">_array</span><span class="p">,</span> <span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">lattice</span><span class="p">))</span>
@@ -129,6 +133,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_rpa_orders</span> <span class="o">=</span> <span class="n">get_rpa_orders</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_rpa_rescale_eigs</span> <span class="o">=</span> <span class="n">rpa_rescale_eigs</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_max_atoms_per_block</span> <span class="o">=</span> <span class="n">max_atoms_per_block</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_ewald_cutoff_scaling</span> <span class="o">=</span> <span class="n">ewald_cutoff_scaling</span>
 
     <span class="k">def</span> <span class="fm">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="p">)</span>
@@ -147,6 +152,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_rpa_orders</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_rpa_rescale_eigs</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_max_atoms_per_block</span> <span class="ow">or</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_ewald_cutoff_scaling</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">return</span> <span class="bp">self</span>
 
@@ -160,13 +166,13 @@
         <span class="n">msg</span> <span class="o">=</span> <span class="n">_ffi</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;char[150]&#39;</span><span class="p">)</span>
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_get_exception</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span><span class="p">,</span> <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;int*&#39;</span><span class="p">,</span> <span class="n">code</span><span class="p">),</span> <span class="n">origin</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MBDFortranException</span><span class="p">(</span>
+            <span class="k">raise</span> <span class="n">MBDFortranError</span><span class="p">(</span>
                 <span class="nb">int</span><span class="p">(</span><span class="n">code</span><span class="p">),</span> <span class="n">_ffi</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="n">origin</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(),</span> <span class="n">_ffi</span><span class="o">.</span><span class="n">string</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
             <span class="p">)</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;(a.u.) Atom coordinates in rows.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(a.u.) Atom coordinates in rows.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coords</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="nd">@coords</span><span class="o">.</span><span class="n">setter</span>
@@ -175,7 +181,7 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lattice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;(a.u.) Lattice vectors in rows.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;(a.u.) Lattice vectors in rows.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lattice</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
 
     <span class="nd">@lattice</span><span class="o">.</span><span class="n">setter</span>
@@ -183,12 +189,16 @@
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_update_lattice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span><span class="p">,</span> <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">_array</span><span class="p">(</span><span class="n">lattice</span><span class="p">)))</span>
 
 <div class="viewcode-block" id="MBDGeom.has_lattice"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.has_lattice">[docs]</a>    <span class="k">def</span> <span class="nf">has_lattice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Whether structure is a crystal.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Whether structure is a crystal.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lattice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="MBDGeom.print_timing"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.print_timing">[docs]</a>    <span class="k">def</span> <span class="nf">print_timing</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Print timing from libMBD.&quot;&quot;&quot;</span>
+        <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_print_timing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MBDGeom.ts_energy"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.ts_energy">[docs]</a>    <span class="nd">@_auto_context</span>
     <span class="k">def</span> <span class="nf">ts_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span><span class="p">,</span> <span class="n">sR</span><span class="p">,</span> <span class="n">d</span><span class="o">=</span><span class="mf">20.0</span><span class="p">,</span> <span class="n">damping</span><span class="o">=</span><span class="s1">&#39;fermi&#39;</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculate a TS energy.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate a TS energy.</span>
 
 <span class="sd">        :param array-like alpha_0: (a.u.) atomic polarizabilities</span>
 <span class="sd">        :param array-like C6: (a.u.) atomic :math:`C_6` coefficients</span>
@@ -218,7 +228,7 @@
             <span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_lattice</span><span class="p">():</span>
                 <span class="n">lattice_gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="n">results</span> <span class="o">=</span> <span class="n">ene</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">lattice_gradients</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="p">(</span><span class="n">ene</span><span class="p">,</span> <span class="n">gradients</span><span class="p">,</span> <span class="n">lattice_gradients</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]))</span>
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_get_results</span><span class="p">(</span><span class="n">res_f</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">))</span>
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_destroy_result</span><span class="p">(</span><span class="n">res_f</span><span class="p">)</span>
         <span class="n">ene</span> <span class="o">=</span> <span class="n">ene</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
@@ -229,7 +239,7 @@
         <span class="k">return</span> <span class="n">ene</span></div>
 
 <div class="viewcode-block" id="MBDGeom.mbd_energy"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.mbd_energy">[docs]</a>    <span class="nd">@_auto_context</span>
-    <span class="k">def</span> <span class="nf">mbd_energy</span><span class="p">(</span>
+    <span class="k">def</span> <span class="nf">mbd_energy</span><span class="p">(</span>  <span class="c1"># noqa: C901</span>
         <span class="bp">self</span><span class="p">,</span>
         <span class="n">alpha_0</span><span class="p">,</span>
         <span class="n">C6</span><span class="p">,</span>
@@ -240,8 +250,9 @@
         <span class="n">damping</span><span class="o">=</span><span class="s1">&#39;fermi,dip&#39;</span><span class="p">,</span>
         <span class="n">variant</span><span class="o">=</span><span class="s1">&#39;rsscs&#39;</span><span class="p">,</span>
         <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">intermediates</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy.</span>
 
 <span class="sd">        :param array-like alpha_0: (a.u.) atomic polarizabilities</span>
 <span class="sd">        :param array-like C6: (a.u.) atomic :math:`C_6` coefficients</span>
@@ -279,11 +290,14 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_exc</span><span class="p">()</span>
         <span class="n">ene</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># for some reason np.array(0) doesn&#39;t work</span>
         <span class="n">gradients</span><span class="p">,</span> <span class="n">lattice_gradients</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
+        <span class="n">alpha_0_scs</span><span class="p">,</span> <span class="n">C6_scs</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="n">eigs</span><span class="p">,</span> <span class="n">modes</span><span class="p">,</span> <span class="n">rpa_orders</span><span class="p">,</span> <span class="n">eigs_k</span><span class="p">,</span> <span class="n">modes_k</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span>
         <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
             <span class="n">gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_atoms</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_lattice</span><span class="p">():</span>
                 <span class="n">lattice_gradients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">intermediates</span><span class="p">:</span>
+            <span class="n">alpha_0_scs</span><span class="p">,</span> <span class="n">C6_scs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_atoms</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_atoms</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_spectrum</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_lattice</span><span class="p">():</span>
                 <span class="n">n_kpts</span> <span class="o">=</span> <span class="p">(</span>
@@ -309,6 +323,8 @@
             <span class="n">rpa_orders</span><span class="p">,</span>
             <span class="n">eigs_k</span><span class="p">,</span>
             <span class="n">modes_k</span><span class="p">,</span>
+            <span class="n">alpha_0_scs</span><span class="p">,</span>
+            <span class="n">C6_scs</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_get_results</span><span class="p">(</span><span class="n">res_f</span><span class="p">,</span> <span class="o">*</span><span class="p">(</span><span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results</span><span class="p">))</span>
         <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_destroy_result</span><span class="p">(</span><span class="n">res_f</span><span class="p">)</span>
@@ -319,10 +335,14 @@
             <span class="n">ene</span> <span class="o">=</span> <span class="n">ene</span><span class="p">,</span> <span class="n">eigs</span><span class="p">,</span> <span class="n">modes</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_rpa_orders</span><span class="p">:</span>
             <span class="n">ene</span> <span class="o">=</span> <span class="n">ene</span><span class="p">,</span> <span class="n">rpa_orders</span>
+        <span class="k">if</span> <span class="n">force</span> <span class="ow">or</span> <span class="n">intermediates</span><span class="p">:</span>
+            <span class="n">ene</span> <span class="o">=</span> <span class="p">(</span><span class="n">ene</span><span class="p">,)</span>
         <span class="k">if</span> <span class="n">force</span><span class="p">:</span>
-            <span class="n">ene</span> <span class="o">=</span> <span class="p">(</span><span class="n">ene</span><span class="p">,</span> <span class="n">gradients</span><span class="p">)</span>
+            <span class="n">ene</span> <span class="o">+=</span> <span class="p">(</span><span class="n">gradients</span><span class="p">,)</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">has_lattice</span><span class="p">():</span>
                 <span class="n">ene</span> <span class="o">+=</span> <span class="p">(</span><span class="n">lattice_gradients</span><span class="p">,)</span>
+        <span class="k">if</span> <span class="n">intermediates</span><span class="p">:</span>
+            <span class="n">ene</span> <span class="o">+=</span> <span class="p">(</span><span class="n">alpha_0_scs</span><span class="p">,</span> <span class="n">C6_scs</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">ene</span></div>
 
     <span class="nd">@_auto_context</span>
@@ -350,7 +370,7 @@
         <span class="k">return</span> <span class="n">dipmat</span>
 
 <div class="viewcode-block" id="MBDGeom.mbd_energy_species"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.mbd_energy_species">[docs]</a>    <span class="k">def</span> <span class="nf">mbd_energy_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">volume_ratios</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy from atom types and Hirshfed-volume ratios.</span>
+<span class="w">        </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;Calculate an MBD energy from atom types and Hirshfed-volume ratios.</span>
 
 <span class="sd">        :param array-like species: atom types (elements)</span>
 <span class="sd">        :param array-like volume_ratios: ratios of Hirshfeld volumes in</span>
@@ -362,7 +382,7 @@
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mbd_energy</span><span class="p">(</span><span class="n">alpha_0</span><span class="p">,</span> <span class="n">C6</span><span class="p">,</span> <span class="n">R_vdw</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MBDGeom.ts_energy_species"><a class="viewcode-back" href="../../api.html#pymbd.fortran.MBDGeom.ts_energy_species">[docs]</a>    <span class="k">def</span> <span class="nf">ts_energy_species</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">species</span><span class="p">,</span> <span class="n">volume_ratios</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Calculate a TS energy from atom types and Hirshfed-volume ratios.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate a TS energy from atom types and Hirshfed-volume ratios.</span>
 
 <span class="sd">        :param array-like species: atom types (elements)</span>
 <span class="sd">        :param array-like volume_ratios: ratios of Hirshfeld volumes in</span>
@@ -407,7 +427,44 @@
             <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">C</span><span class="p">),</span>
         <span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_exc</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">res</span></div>
+        <span class="k">return</span> <span class="n">res</span>
+
+    <span class="nd">@_auto_context</span>
+    <span class="k">def</span> <span class="nf">nonint_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">w</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
+        <span class="n">n_pts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_pts</span><span class="p">)</span>
+        <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_nonint_density</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span><span class="p">,</span>
+            <span class="n">n_atoms</span><span class="p">,</span>
+            <span class="n">n_pts</span><span class="p">,</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">pts</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">w</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">rho</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_exc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">rho</span>
+
+    <span class="nd">@_auto_context</span>
+    <span class="k">def</span> <span class="nf">int_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pts</span><span class="p">,</span> <span class="n">q</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">w_t</span><span class="p">,</span> <span class="n">modes</span><span class="p">):</span>  <span class="c1"># noqa: D102</span>
+        <span class="n">n_pts</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pts</span><span class="p">)</span>
+        <span class="n">n_atoms</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">rho</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_pts</span><span class="p">)</span>
+        <span class="n">_lib</span><span class="o">.</span><span class="n">cmbd_int_density</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_geom_f</span><span class="p">,</span>
+            <span class="n">n_atoms</span><span class="p">,</span>
+            <span class="n">n_pts</span><span class="p">,</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">pts</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">q</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">m</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">w_t</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">modes</span><span class="p">),</span>
+            <span class="n">_cast</span><span class="p">(</span><span class="s1">&#39;double*&#39;</span><span class="p">,</span> <span class="n">rho</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_exc</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">rho</span></div>
 
 
 <span class="k">def</span> <span class="nf">_ndarray</span><span class="p">(</span><span class="n">ptr</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float&#39;</span><span class="p">):</span>
@@ -425,7 +482,7 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="../../index.html">Libmbd</a></h1>
+<h1 class="logo"><a href="../../index.html">libMBD</a></h1>
 
 
 
@@ -441,18 +498,6 @@
 
 
 
-
-
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/libmbd/libmbd">
-    <img
-        alt="https://secure.travis-ci.org/libmbd/libmbd.svg?branch=master"
-        src="https://secure.travis-ci.org/libmbd/libmbd.svg?branch=master"
-    />
-</a>
-</p>
 
 
 
@@ -496,11 +541,11 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2018-2021, Jan Hermann.
+      &copy;2018-2023, Jan Hermann.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.5</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
       
     </div>
 
