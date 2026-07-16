@@ -1,5 +1,0 @@
-on:
-  workflow_dispatch:          # triggered by libmbd
-jobs:
-  deploy:
-    uses: libmbd/libmbd/.github/workflows/doc-deploy.yml@master
